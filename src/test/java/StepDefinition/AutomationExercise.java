@@ -1,5 +1,6 @@
 package StepDefinition;
 
+import java.time.Duration;
 import java.util.concurrent.TimeUnit;
 
 import javax.xml.xpath.XPath;
@@ -118,7 +119,7 @@ public class AutomationExercise {
 		//WebElement scroll = driver.findElement(By.xpath("//a[@href='/product_details/2']"));
 	    //Actions actions = new Actions(driver);
 	    //actions.moveToElement(scroll).perform();
-		driver.findElement(By.xpath("//a[@href='/product_details/2']")).click();
+		driver.findElement(By.xpath("//a[@href='/product_details/1']")).click();
 		System.out.println("Verifying PDP page details");
 		boolean t = driver.findElement(By.xpath("//button[@class='btn btn-default cart']")).isDisplayed();
 	      if (t) {
@@ -142,7 +143,8 @@ public class AutomationExercise {
 	      if (u) {
 	    	  driver.findElement(By.xpath("//button[@class='btn btn-default cart']")).click();
 	    	  System.out.println("Add to cart button is clicked successfully");
-	    	  driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+	    	  driver.manage().timeouts().scriptTimeout(Duration.ofSeconds(20));
+
 	      } else {
 	         System.out.println("Add to cart button failed");
 	      }
@@ -152,20 +154,16 @@ public class AutomationExercise {
 	@Then("navigates to cart page")
 	public void navigates_to_cart_page() {
 		System.out.println("Verifying cart addition modal");
-		boolean t = driver.findElement(By.xpath("//i[@class='material-icons']")).isDisplayed();
-	      if (t) {
-	         System.out.println("Green tick is displayed");
-	      } else {
-	         System.out.println("Green tick is not displayed");
-	      }
-	      boolean u = driver.findElement(By.xpath("//h4[text()='Added!']")).isDisplayed();
+		
+	      boolean u = driver.findElement(By.xpath("//a[@href='/view_cart']")).isDisplayed();
 	      if (u) {
-	         System.out.println("Added! text is displayed");
+	         System.out.println("View cart url is displayed");
 	      } else {
-	         System.out.println("Added! text is not displayed");
+	         System.out.println("View cart url is not displayed");
 	      }
 	      boolean v = driver.findElement(By.xpath("//a[@href='/view_cart']")).isDisplayed();
 	      if (v) {
+	    	  driver.manage().timeouts().scriptTimeout(Duration.ofSeconds(5));
 	    	  driver.findElement(By.xpath("//a[@href='/view_cart']")).click();
 	    	  System.out.println("View cart url is clicked successfully");
 	      } else {
@@ -175,20 +173,91 @@ public class AutomationExercise {
 
 	@When("user verifies cart addition")
 	public void user_verifies_cart_addition() {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new io.cucumber.java.PendingException();
+		boolean v = driver.findElement(By.xpath("//a[@href='/product_details/1'][text()='Blue Top']")).isDisplayed();
+	      if (v) {
+	    	  System.out.println("Product name is present in cart entry");
+	      } else {
+	         System.out.println("Product name is not present in cart entry");
+	      }
+	    boolean t = driver.findElement(By.xpath("//button[text()='1']")).isDisplayed();
+	      if (t) {
+	    	  System.out.println("Product Quantity added is present in cart entry");
+	      } else {
+	         System.out.println("Product Quantity added is not present in cart entry");
+	      }
+	    boolean u = driver.findElement(By.xpath("//p[text()='Rs. 500']")).isDisplayed();
+	      if (u) {
+	    	  System.out.println("Product unit price is present in cart entry");
+	      } else {
+	         System.out.println("Product unit price is not present in cart entry");
+	      }
+	    boolean w = driver.findElement(By.xpath("//p[@class='cart_total_price'][text()='Rs. 500']")).isDisplayed();
+	      if (w) {
+	    	  System.out.println("Cart total price is present");
+	      } else {
+	         System.out.println("Cart total price is not present");
+	      }
+	    boolean x = driver.findElement(By.xpath("//a[@class='btn btn-default check_out'][text()='Proceed To Checkout']")).isDisplayed();
+	      if (x) {
+	    	  System.out.println("Checkout button is present");
+	      } else {
+	         System.out.println("Checkout button is not present");
+	      }
 	}
 
 	@When("navigates to checkout")
 	public void navigates_to_checkout() {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new io.cucumber.java.PendingException();
+		boolean x = driver.findElement(By.xpath("//a[@class='btn btn-default check_out'][text()='Proceed To Checkout']")).isDisplayed();
+	      if (x) {
+	    	  driver.findElement(By.xpath("//a[@class='btn btn-default check_out'][text()='Proceed To Checkout']")).click();
+	    	  System.out.println("Checkout button is present");
+	      } else {
+	         System.out.println("Checkout button is not present");
+	      }
 	}
 
 	@Then("verifies checkout details")
 	public void verifies_checkout_details() {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new io.cucumber.java.PendingException();
+		boolean v = driver.findElement(By.xpath("//a[@href='/product_details/1'][text()='Blue Top']")).isDisplayed();
+	      if (v) {
+	    	  System.out.println("Product name is present in checkout page");
+	      } else {
+	         System.out.println("Product name is not present in checkout page");
+	      }
+	    boolean t = driver.findElement(By.xpath("//button[text()='1']")).isDisplayed();
+	      if (t) {
+	    	  System.out.println("Product Quantity added is present in checkout page");
+	      } else {
+	         System.out.println("Product Quantity added is not present in checkout page");
+	      }
+	    boolean u = driver.findElement(By.xpath("//p[text()='Rs. 500']")).isDisplayed();
+	      if (u) {
+	    	  System.out.println("Product unit price is present in checkout page");
+	      } else {
+	         System.out.println("Product unit price is not present in checkout page");
+	      }
+	    boolean w = driver.findElement(By.xpath("//h2[text()='Review Your Order']")).isDisplayed();
+	      if (w) {
+	    	  System.out.println("Review your order button is present checkout page");
+	      } else {
+	         System.out.println("Review your order button is not present checkout page");
+	      }
+	    boolean x = driver.findElement(By.xpath("//ul[@id='address_delivery']/li[text()='Mr. Raghav Tester']")).isDisplayed();
+	      if (x) {
+	    	  System.out.println("Customer name in delivery address is present checkout page");
+	      } else {
+	         System.out.println("Customer name in delivery address is not present checkout page");
+	      }
+	     boolean y = driver.findElement(By.xpath("//a[@href='/payment'][text()='Place Order']")).isDisplayed();
+	      if (y) {
+	    	  System.out.println("Place order button is present checkout page");
+	      } else {
+	         System.out.println("Place order button is not present checkout page");
+	      }
+	      
+	      driver.close();
+	      driver.quit();
+	     
 	}
 
 }
